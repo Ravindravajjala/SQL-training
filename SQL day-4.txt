@@ -1,0 +1,90 @@
+select *from lms_book_details
+select *from lms_suppliers_details;
+
+--display the bookcode, book name and supplier name of the books in library
+
+select book_code,book_title,supplier_name
+from lms_book_details join lms_suppliers_details
+on lms_book_details.SUPPLIER_ID=lms_suppliers_details.supplier_id;
+
+select *from lms_book_details;
+select *from lms_members;
+select *from lms_book_issue;
+
+--Using JOIN for two tables
+--display the book_title and the member_id who has taken the books from the library
+select DISTINCT book_title, member_id from lms_book_details INNER JOIN
+lms_book_issue on lms_book_details.book_code=lms_book_issue.book_code;
+
+--Using alias instead of writing the table name everytime while accessing the columns from multiple tables
+
+select l1.book_code,l1.book_title,12.supplier_name from
+lms_book_details as l1 inner join lms_suppliers_details as l2 on l1.Supplier_ID=l2.supplier_id;
+
+select *from lms_book_details;
+select *from lms_suppliers_details;
+
+--Using JOIN for three tables
+
+select e.first_name,d.name as Dept, l.state from employee as e join department as d on e.department_id=d.id
+join location as l on l.id=d.location_id;
+
+--in the inner JOINS of the tables it does not make any difference in the result if the relationship is not disturbed
+
+
+--display department_id and number of employees in each department
+select department_id,count(id) as CountofEmps from employee group by department_id;
+
+--join with group by
+--display department name and number of employees in each department
+Select d.name, count(*) as CountofEmps from employee as e join
+department as d on e.department_id=d.id group by name;
+
+
+select *from lms_book_details
+select *from lms_suppliers_details
+select *from lms_book_issue
+
+--display the supplier_name and number of books supplied by each supplier
+
+select l2.supplier_name,12.supplier_id,count(book_code) as Count from
+lms_book_details as l1 join lms_suppliers_details as l2
+on l1.SUPPLIER_ID=l2.SUPPLIER_ID group by l2.SUPPLIER_NAME,l2.supplier_id;
+
+--display department_id and number of employees in each department
+select department_id, count(id) as CountofEmps from employee group by department_id;
+
+--display department name and number and number of employees in each department
+select d.name, count(e.id) as CountofEmps from employees as e join department as d
+on e.department_id=d.id group by d.name;
+
+--display the book title and date when the book was taken from the library
+select *from lms_book_details
+select *from lms_book_issue
+
+
+
+
+--3)WRITE A QUERY TO DISPLAY THE BOOK TITLE AND DATE WHEN THE BOOK WAS TAKEN FROM THE LIBRARY
+select DISTINCT l1.book_title,l2.date_issue from lms_book_details as l1 join lms_book_issue as l2 on l1.BOOK_CODE=l2.book_code; 
+
+--1)WRITE A QUERY TO DISPLAY THE BOOK TITLE, SUPPLIER NAME WHO HAS SUPPLIED BOOKS TO LIBRARY
+select distinct l1.book_title,l2.supplier_name from lms_book_details as l1 join lms_suppliers_details as l2 on l1.SUPPLIER_ID=l2.supplier_id;
+
+--2)WRITE A QUERY TO DISPLAY MEMBER NAME AND BOOK CODE FOR THE BOOK HE/SHE TAKEN FROM TE LIBRARY
+select distinct l3.member_name,l1.book_code from lms_book_details as l1 join lms_book_issue as l2 on l1.BOOK_CODE=l2.book_code join lms_members as l3 on l2.MEMBER_ID=l3.member_id;
+
+--4)
+select l1.member_id,l3.fine_amount from lms_members as l1 join lms_book_issue as l2 on l1.member_id=l2.member_id join lms_fine_details as l3 on l3.fine_range=l2.fine_range;
+
+
+--17)Write a query to display the member id, member name, city and member status of members with the total fine paid by them with alias name “Fine”.
+select l1.member_id,l1.member_name,l1.city,l1.membership_status,SUM(l3.fine_amount) as Fine from lms_members as l1 join 
+lms_book_issue l2 on l1.member_id=l2.member_id join lms_fine_details as l3 on l2.fine_range=l3.fine_range  Group by l1.member_id,l1.member_name,l1.city,l1.membership_status;
+
+
+--AVG QUESTIONS
+--1)Write a query to display the member id, member name of the members, book code and book title of the books taken by them.
+select distinct l1.member_id,l1.member_name,l3.book_code,l3.book_title from lms_members as l1 join 
+lms_book_issue as l2 on l1.MEMBER_ID=l2.member_id join 
+lms_book_details as l3 on l2.BOOK_CODE=l3.book_code;
